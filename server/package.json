@@ -1,0 +1,43 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "npm run src/app.js",
+    "start": "nodemon src/app.js",
+    "lint:fix": "eslint --ext .js --fix src/",
+    "lint": "eslint --ext .js src/",
+    "prod": "pm2 start src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Koa"
+  ],
+  "author": "Pasham Akhil Kumar Reddy",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.13.0",
+    "koa-body": "^4.2.0",
+    "koa-compress": "^5.0.1",
+    "koa-helmet": "^5.2.0",
+    "koa-logger": "^3.2.1",
+    "koa-ratelimit": "^4.2.1",
+    "koa-response-time": "^2.1.0",
+    "koa-router": "^9.4.0",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.2",
+    "pm2": "^4.4.1",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4"
+  }
+}
