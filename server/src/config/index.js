@@ -1,12 +1,18 @@
 require('dotenv').config();
 
+const environment = process.env.NODE_ENV || 'development';
+
 module.exports = {
+  development: {},
+  test: {},
+  production: {},
   server: {
     PORT: process.env.PORT || 5000,
+    HOST: (environment === 'production' || environment === 'prod') ? '0.0.0.0' : 'localhost',
   },
   db: {
     mongo: {
-      DB_HOST: process.env.DB_HOST || 'localhost',
+      DB_HOST: process.env.DB_HOST || '127.0.0.1',
       DB_PORT: process.env.DB_PORT || '27017',
       DB_NAME: process.env.DB_NAME || 'test',
       DB_USER: process.env.DB_USER || 'test',

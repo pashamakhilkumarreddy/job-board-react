@@ -1,11 +1,16 @@
 const Koa = require('koa');
 const bodyParser = require('koa-body');
-const cors = require('@koa/cors')
+const cors = require('@koa/cors');
 const helmet = require('koa-helmet');
 const compression = require('koa-compress');
-const responseTime = require('koa-response-time')
+const responseTime = require('koa-response-time');
 const rateLimit = require('koa-ratelimit');
 const logger = require('koa-logger');
+
+const {
+  getDBURI,
+  connectToDB,
+} = require('./utils/dbcon');
 
 const app = new Koa();
 const db = new Map();
@@ -28,16 +33,28 @@ app
     headers: {
       remaining: 'Rate-Limit-Remaining',
       reset: 'Rate-Limit-Reset',
-      total: 'Rate-Limit-Total'
+      total: 'Rate-Limit-Total',
     },
     max: 300,
     disableHeader: false,
   }));
 
+require('./routes')({
+  app,
+});
+
 const {
-  PORT
+  PORT,
+  HOST,
 } = require('./config').server;
 
-app.listen(PORT, () => {
-  console.info(`The server is up and running on ${PORT}`)
+getDBURI().then((dbURI) => {
+  connectToDB(dbURI).then(() => {
+    console.info('Successfully connected to the database');
+    app.listen(PORT, HOST, () => {
+      console.info(`The server is up and running on http://${HOST}:${PORT}`);
+    });
+  }).catch((err) => {
+    console.error(err);
+  });
 });
